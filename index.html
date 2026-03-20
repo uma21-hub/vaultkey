@@ -510,9 +510,40 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
 @media(max-width:880px){.sidebar{display:none}.auth-left{display:none}.auth-right{width:100%;min-width:0}.settings-sidebar{display:none}}
 @media(max-width:600px){.topbar-search{display:none}.vault-main{padding:13px 11px}.cards-grid{grid-template-columns:1fr}.topbar{padding:0 11px}.settings-main{padding:18px 14px}.launch-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}}
 
-/* ════════════════════════════════════
-   ABOUT VIEW — built-in page
-════════════════════════════════════ */
+/* ════ CATEGORY MANAGER ════ */
+.sitem-ico.cat-svg-ico{width:28px;height:28px;border-radius:7px;overflow:hidden;background:none;border:none;flex-shrink:0}
+.sitem-ico.cat-svg-ico svg{width:28px;height:28px;border-radius:7px}
+.cat-mgr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px;max-height:360px;overflow-y:auto}
+.cat-mgr-item{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--surf3);border:1.5px solid var(--border);border-radius:11px;transition:all .18s}
+.cat-mgr-item:hover{border-color:rgba(26,110,245,.3)}
+.cat-mgr-svg{width:34px;height:34px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.cat-mgr-svg svg{width:34px;height:34px}
+.cat-mgr-name{font-weight:600;font-size:.88rem;flex:1}
+.cat-mgr-remove{width:26px;height:26px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;transition:all .15s;flex-shrink:0}
+.cat-mgr-remove:hover{background:rgba(220,38,38,.08);border-color:rgba(220,38,38,.3);color:var(--red)}
+.cat-mgr-remove.disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+.cat-add-row{display:flex;gap:9px;margin-top:14px;align-items:flex-end}
+.cat-color-presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.cat-color-dot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.cat-color-dot:hover,.cat-color-dot.sel{border-color:var(--text);transform:scale(1.2)}
+/* ═══ END CATEGORY MANAGER ═══ */
+
+.top-nav-links{display:flex;align-items:center;gap:2px}
+.top-nav-link{padding:7px 12px;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--sub);cursor:pointer;border:none;background:none;transition:all .18s;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif}
+.top-nav-link:hover{color:var(--blue);background:var(--bdim)}
+.top-nav-link.active-nav{color:var(--blue);background:var(--bdim)}
+.nav-divider-v{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0}
+/* Auth page fixed navbar */
+.auth-navbar{position:fixed;top:0;left:0;right:0;z-index:999;height:58px;display:flex;align-items:center;padding:0 24px;gap:8px;background:rgba(10,12,20,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}
+.auth-nb-brand{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none}
+.auth-nb-logo{width:32px;height:32px;background:#1a6ef5;border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(26,110,245,.35);flex-shrink:0}
+.auth-nb-logo svg{width:18px;height:18px;fill:#fff}
+.auth-nb-name{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#fff}
+.auth-nb-link{padding:7px 12px;border-radius:8px;font-size:.83rem;font-weight:600;color:rgba(255,255,255,.52);cursor:pointer;border:none;background:none;transition:all .18s;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif}
+.auth-nb-link:hover{color:#fff;background:rgba(255,255,255,.1)}
+.auth-nb-divider{width:1px;height:20px;background:rgba(255,255,255,.12);margin:0 2px;flex-shrink:0}
+@media(max-width:700px){.top-nav-links{display:none}.auth-navbar .auth-nb-link{display:none}}
+
 #view-about{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 .about-topbar{
   height:58px;display:flex;align-items:center;padding:0 20px;gap:12px;
@@ -752,6 +783,26 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
 
 <!-- ════ AUTH ════ -->
 <div id="view-auth" class="hidden">
+
+  <!-- Fixed top navbar — visible before login -->
+  <nav class="auth-navbar">
+    <div class="auth-nb-brand" onclick="showAboutFromAuth()">
+      <div class="auth-nb-logo"><svg viewBox="0 0 24 24"><path d="M12 1C8.676 1 6 3.676 6 7v1H4a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v1H8V7c0-2.276 1.724-4 4-4zm0 9a2 2 0 0 1 1 3.732V18h-2v-2.268A2 2 0 0 1 12 12z"/></svg></div>
+      <span class="auth-nb-name">VaultKey</span>
+    </div>
+    <div class="auth-nb-divider"></div>
+    <button class="auth-nb-link" onclick="showAboutFromAuth('ab-mission')">Mission</button>
+    <button class="auth-nb-link" onclick="showAboutFromAuth('ab-features')">Features</button>
+    <button class="auth-nb-link" onclick="showAboutFromAuth('ab-privacy')">Privacy</button>
+    <button class="auth-nb-link" onclick="showAboutFromAuth('ab-contact-s')">Contact</button>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <button class="auth-nb-link" onclick="authSwitch('signin')" style="color:rgba(255,255,255,.7)">Sign In</button>
+      <button style="padding:8px 18px;background:#1a6ef5;color:#fff;border:none;border-radius:9px;font-weight:700;font-size:.83rem;cursor:pointer;box-shadow:0 3px 12px rgba(26,110,245,.35);transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif" onmouseover="this.style.background='#0f56d6'" onmouseout="this.style.background='#1a6ef5'" onclick="authSwitch('signup')">Get Started Free</button>
+    </div>
+  </nav>
+
+  <!-- Push content below fixed navbar -->
+  <div style="height:58px;flex-shrink:0"></div>
   <div class="auth-left">
     <div class="auth-left-grad"></div><div class="auth-left-grid"></div>
     <div class="auth-sh auth-sh-1"></div><div class="auth-sh auth-sh-2"></div>
@@ -845,7 +896,14 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
       <span class="topbar-name">VaultKey</span>
     </a>
 
-    <!-- Feature 4: Browser back/forward nav -->
+    <!-- Nav links -->
+    <div class="top-nav-links">
+      <div class="nav-divider-v"></div>
+      <button class="top-nav-link" onclick="navigateAbout('ab-mission')">Mission</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-features')">Features</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-privacy')">Privacy</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-contact-s')">Contact</button>
+    </div>
     <div class="nav-btns">
       <button class="nav-btn" id="nav-back" onclick="histBack()" title="Back (Alt+←)" disabled>&#8592;</button>
       <button class="nav-btn" id="nav-fwd"  onclick="histFwd()"  title="Forward (Alt+→)" disabled>&#8594;</button>
@@ -933,6 +991,14 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
       <div class="topbar-logo"><svg viewBox="0 0 24 24"><path d="M12 1C8.676 1 6 3.676 6 7v1H4a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v1H8V7c0-2.276 1.724-4 4-4zm0 9a2 2 0 0 1 1 3.732V18h-2v-2.268A2 2 0 0 1 12 12z"/></svg></div>
       <span class="topbar-name">VaultKey</span>
     </a>
+    <!-- Nav links -->
+    <div class="top-nav-links">
+      <div class="nav-divider-v"></div>
+      <button class="top-nav-link" onclick="navigateAbout('ab-mission')">Mission</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-features')">Features</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-privacy')">Privacy</button>
+      <button class="top-nav-link" onclick="navigateAbout('ab-contact-s')">Contact</button>
+    </div>
     <div class="topbar-right">
       <button class="btn btn-outline btn-sm" onclick="navigate('vault')">← Back to Vault</button>
       <div class="user-chip"><div class="user-av" id="s-av">?</div><span class="user-nm" id="s-nm">User</span></div>
@@ -1104,10 +1170,11 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
       <span class="topbar-name">VaultKey</span>
     </a>
     <div style="display:flex;align-items:center;gap:6px;margin-left:16px">
-      <a onclick="aboutScrollTo('ab-mission')" style="padding:7px 13px;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--sub);cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--bdim)';this.style.color='var(--blue)'" onmouseout="this.style.background='';this.style.color='var(--sub)'">Mission</a>
-      <a onclick="aboutScrollTo('ab-features')" style="padding:7px 13px;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--sub);cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--bdim)';this.style.color='var(--blue)'" onmouseout="this.style.background='';this.style.color='var(--sub)'">Features</a>
-      <a onclick="aboutScrollTo('ab-privacy')" style="padding:7px 13px;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--sub);cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--bdim)';this.style.color='var(--blue)'" onmouseout="this.style.background='';this.style.color='var(--sub)'">Privacy</a>
-      <a onclick="aboutScrollTo('ab-contact-s')" style="padding:7px 13px;border-radius:8px;font-size:.83rem;font-weight:600;color:var(--sub);cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--bdim)';this.style.color='var(--blue)'" onmouseout="this.style.background='';this.style.color='var(--sub)'">Contact</a>
+      <div class="nav-divider-v"></div>
+      <button class="top-nav-link active-nav" onclick="aboutScrollTo('ab-mission')">Mission</button>
+      <button class="top-nav-link" onclick="aboutScrollTo('ab-features')">Features</button>
+      <button class="top-nav-link" onclick="aboutScrollTo('ab-privacy')">Privacy</button>
+      <button class="top-nav-link" onclick="aboutScrollTo('ab-contact-s')">Contact</button>
     </div>
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
       <button class="btn-new-e" onclick="navigate('vault')">← Back to Vault</button>
@@ -1300,9 +1367,9 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
       </div>
       <div class="ab-contact-grid">
         <div class="ab-contact-cards">
-          <div class="ab-contact-card"><div class="ab-contact-ico" style="background:var(--bdim)">📧</div><div><h4>Email Support</h4><p>For all queries, complaints and suggestions.</p><a href="mailto:vault.help@gmail.com">vault.help@gmail.com</a></div></div>
+          <div class="ab-contact-card"><div class="ab-contact-ico" style="background:var(--bdim)">📧</div><div><h4>Email Support</h4><p>For all queries, complaints and suggestions.</p><a href="/cdn-cgi/l/email-protection#760017031a02581e131a0636111b171f1a5815191b"><span class="__cf_email__" data-cfemail="9ceafde9f0e8b2f4f9f0ecdcfbf1fdf5f0b2fff3f1">[email&#160;protected]</span></a></div></div>
           <div class="ab-contact-card"><div class="ab-contact-ico" style="background:rgba(5,150,105,.1)">⏱️</div><div><h4>Response Time</h4><p>We typically reply within <strong style="color:var(--green)">24–48 hours</strong> on business days.</p></div></div>
-          <div class="ab-contact-card"><div class="ab-contact-ico" style="background:rgba(220,38,38,.08)">🔒</div><div><h4>Security Issues</h4><p>Report vulnerabilities to <a href="mailto:vault.help@gmail.com">vault.help@gmail.com</a> — do not post publicly.</p></div></div>
+          <div class="ab-contact-card"><div class="ab-contact-ico" style="background:rgba(220,38,38,.08)">🔒</div><div><h4>Security Issues</h4><p>Report vulnerabilities to <a href="/cdn-cgi/l/email-protection#4f392e3a233b61272a233f0f28222e2623612c2022"><span class="__cf_email__" data-cfemail="314750445d451f59545d4171565c50585d1f525e5c">[email&#160;protected]</span></a> — do not post publicly.</p></div></div>
           <div class="ab-contact-card"><div class="ab-contact-ico" style="background:rgba(217,119,6,.09)">💡</div><div><h4>Feature Requests</h4><p>Every suggestion is read and considered for our roadmap.</p></div></div>
         </div>
         <div class="ab-form-box">
@@ -1357,7 +1424,7 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
             <button class="ab-footer-link" onclick="aboutScrollTo('ab-contact-s')">Contact</button>
           </div>
           <div><h4 style="font-size:.77rem;font-weight:700;margin-bottom:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text)">Support</h4>
-            <a class="ab-footer-link" href="mailto:vault.help@gmail.com" style="display:block;font-size:.81rem;color:var(--sub);margin-bottom:7px">vault.help@gmail.com</a>
+            <a class="ab-footer-link" href="/cdn-cgi/l/email-protection#f68097839a82d89e939a86b6919b979f9ad895999b" style="display:block;font-size:.81rem;color:var(--sub);margin-bottom:7px"><span class="__cf_email__" data-cfemail="96e0f7e3fae2b8fef3fae6d6f1fbf7fffab8f5f9fb">[email&#160;protected]</span></a>
             <button class="ab-footer-link" onclick="aboutScrollTo('ab-contact-s')">Send Message</button>
             <button class="ab-footer-link" onclick="aboutScrollTo('ab-contact-s')">Report Bug</button>
           </div>
@@ -1394,27 +1461,64 @@ button,input,select,textarea{font-family:'Inter',sans-serif}
   </div>
 </div>
 
+<!-- ════ CATEGORY MANAGER MODAL ════ -->
+<div class="modal-ov hidden" id="cat-modal" onclick="if(event.target===this)closeCatModal()">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-title">🗂️ Manage Categories</div>
+    <p style="font-size:.84rem;color:var(--sub);margin-bottom:16px">Add your own categories or remove the ones you don't use. Built-in categories cannot be removed.</p>
+    <div class="cat-mgr-grid" id="cat-mgr-grid"></div>
+    <div class="sep"></div>
+    <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:10px">➕ Add New Category</div>
+    <div class="cat-add-row">
+      <div style="flex:1">
+        <label class="lbl">Category Name</label>
+        <input class="inp" id="new-cat-name" placeholder="e.g. Streaming, VPN, Crypto…" maxlength="24" onkeydown="if(event.key==='Enter')addCategory()"/>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <label class="lbl">Color Theme</label>
+      <div class="cat-color-presets" id="cat-color-presets"></div>
+    </div>
+    <div class="msg" id="cat-msg" style="margin-top:10px"></div>
+    <div class="modal-footer" style="margin-top:16px">
+      <button class="btn-ghost btn" onclick="closeCatModal()">Close</button>
+      <button class="btn-primary btn" onclick="addCategory()">Add Category</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <!-- ════════════════════════════════════
      JAVASCRIPT ENGINE
 ════════════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 'use strict';
 
 /* ── CONSTANTS ── */
 const CATS = [
-  {id:'social',   name:'Social',    ico:'👥', cssClass:'cat-social'},
-  {id:'work',     name:'Work',      ico:'💼', cssClass:'cat-work'},
-  {id:'finance',  name:'Finance',   ico:'💳', cssClass:'cat-finance'},
-  {id:'email',    name:'Email',     ico:'📧', cssClass:'cat-email'},
-  {id:'shopping', name:'Shopping',  ico:'🛒', cssClass:'cat-shopping'},
-  {id:'gaming',   name:'Gaming',    ico:'🎮', cssClass:'cat-gaming'},
-  {id:'bank',     name:'Banking',   ico:'🏦', cssClass:'cat-bank'},
-  {id:'travel',   name:'Travel',    ico:'✈️', cssClass:'cat-travel'},
-  {id:'health',   name:'Health',    ico:'🏥', cssClass:'cat-health'},
-  {id:'edu',      name:'Education', ico:'📚', cssClass:'cat-edu'},
-  {id:'other',    name:'Other',     ico:'📁', cssClass:'cat-other'},
+  {id:'social',   name:'Social',   cssClass:'cat-social',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gs" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1877f2"/><stop offset="100%" style="stop-color:#42b5f5"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gs)"/><circle cx="20" cy="15" r="6" fill="white" opacity=".95"/><path d="M8 32c0-6.6 5.4-12 12-12s12 5.4 12 12" fill="white" opacity=".85"/></svg>'},
+  {id:'work',     name:'Work',     cssClass:'cat-work',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gw" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9"/><stop offset="100%" style="stop-color:#6366f1"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gw)"/><rect x="10" y="14" width="20" height="16" rx="2" fill="white" opacity=".9"/><path d="M15 14v-3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3" stroke="white" stroke-width="2" fill="none" opacity=".9"/><line x1="10" y1="21" x2="30" y2="21" stroke="url(#gw)" stroke-width="1.5"/></svg>'},
+  {id:'finance',  name:'Finance',  cssClass:'cat-finance',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gf" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#059669"/><stop offset="100%" style="stop-color:#10b981"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gf)"/><rect x="8" y="12" width="24" height="18" rx="3" fill="white" opacity=".15" stroke="white" stroke-width="1.5"/><rect x="8" y="17" width="24" height="4" fill="white" opacity=".9"/><rect x="12" y="25" width="6" height="2" rx="1" fill="white" opacity=".8"/><rect x="22" y="25" width="6" height="2" rx="1" fill="white" opacity=".8"/></svg>'},
+  {id:'email',    name:'Email',    cssClass:'cat-email',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ge" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#dc2626"/><stop offset="100%" style="stop-color:#f472b6"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#ge)"/><rect x="8" y="12" width="24" height="18" rx="3" fill="white" opacity=".15" stroke="white" stroke-width="1.5"/><polyline points="8,14 20,23 32,14" stroke="white" stroke-width="2" fill="none" opacity=".95"/></svg>'},
+  {id:'shopping', name:'Shopping', cssClass:'cat-shopping',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gsh" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#d97706"/><stop offset="100%" style="stop-color:#f59e0b"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gsh)"/><path d="M10 14h20l-3 12H13L10 14z" fill="white" opacity=".9"/><path d="M10 14l-2-4H6" stroke="white" stroke-width="2" fill="none" opacity=".9"/><circle cx="16" cy="29" r="2" fill="white" opacity=".9"/><circle cx="25" cy="29" r="2" fill="white" opacity=".9"/></svg>'},
+  {id:'gaming',   name:'Gaming',   cssClass:'cat-gaming',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#a78bfa"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gg)"/><rect x="8" y="15" width="24" height="14" rx="4" fill="white" opacity=".15" stroke="white" stroke-width="1.5"/><line x1="16" y1="19" x2="16" y2="25" stroke="white" stroke-width="2" opacity=".9"/><line x1="13" y1="22" x2="19" y2="22" stroke="white" stroke-width="2" opacity=".9"/><circle cx="25" cy="21" r="1.5" fill="white" opacity=".9"/><circle cx="28" cy="24" r="1.5" fill="white" opacity=".9"/></svg>'},
+  {id:'bank',     name:'Banking',  cssClass:'cat-bank',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gb" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#065f46"/><stop offset="100%" style="stop-color:#10b981"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gb)"/><polygon points="20,9 31,15 9,15" fill="white" opacity=".9"/><rect x="12" y="16" width="3" height="12" fill="white" opacity=".85"/><rect x="18.5" y="16" width="3" height="12" fill="white" opacity=".85"/><rect x="25" y="16" width="3" height="12" fill="white" opacity=".85"/><rect x="9" y="28" width="22" height="3" rx="1" fill="white" opacity=".9"/></svg>'},
+  {id:'travel',   name:'Travel',   cssClass:'cat-travel',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gt" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0c4a6e"/><stop offset="100%" style="stop-color:#38bdf8"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gt)"/><path d="M10 26l6-14 4 8 4-5 6 11" fill="white" opacity=".12"/><path d="M8 28c4-8 6-10 12-10s8 2 12 10" stroke="white" stroke-width="1.5" fill="none" opacity=".4"/><path d="M30 18l-10-4-2 6 6 2 2 4 4-8z" fill="white" opacity=".92"/></svg>'},
+  {id:'health',   name:'Health',   cssClass:'cat-health',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gh" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#be123c"/><stop offset="100%" style="stop-color:#fb7185"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#gh)"/><path d="M20 30s-11-7-11-15a7 7 0 0 1 11-5.7A7 7 0 0 1 31 15c0 8-11 15-11 15z" fill="white" opacity=".9"/></svg>'},
+  {id:'edu',      name:'Education',cssClass:'cat-edu',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ged" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#92400e"/><stop offset="100%" style="stop-color:#fbbf24"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#ged)"/><polygon points="20,10 32,16 20,22 8,16" fill="white" opacity=".9"/><path d="M14 19v7c0 2 3 4 6 4s6-2 6-4v-7" fill="white" opacity=".8"/><line x1="32" y1="16" x2="32" y2="26" stroke="white" stroke-width="2" opacity=".8"/></svg>'},
+  {id:'other',    name:'Other',    cssClass:'cat-other',
+   svg:'<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="go" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#475569"/><stop offset="100%" style="stop-color:#94a3b8"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#go)"/><circle cx="14" cy="20" r="3" fill="white" opacity=".9"/><circle cx="20" cy="20" r="3" fill="white" opacity=".9"/><circle cx="26" cy="20" r="3" fill="white" opacity=".9"/></svg>'},
 ];
 
 const SITE_EMOJI = {
@@ -1440,7 +1544,22 @@ let _entries=[],_logs=[],_filter='all',_view='grid',_editId=null;
 let _unsub=null,_unsubLog=null,_pwViz={};
 let _prefs={view:'grid',sort:'name',showStr:true,pwLen:20,sym:true,num:true};
 let _currentTheme='auto';
-let _customPhotoURL=null; // Feature 6 - custom profile photo
+let _customPhotoURL=null;
+let _userCats = [...CATS]; // starts as default, overridden after Firestore load
+
+const CAT_COLORS = [
+  {id:'blue',    g1:'#1877f2',g2:'#42b5f5'},
+  {id:'purple',  g1:'#7c3aed',g2:'#a78bfa'},
+  {id:'green',   g1:'#059669',g2:'#10b981'},
+  {id:'red',     g1:'#dc2626',g2:'#f472b6'},
+  {id:'amber',   g1:'#d97706',g2:'#fbbf24'},
+  {id:'teal',    g1:'#0891b2',g2:'#22d3ee'},
+  {id:'rose',    g1:'#be123c',g2:'#fb7185'},
+  {id:'indigo',  g1:'#4338ca',g2:'#818cf8'},
+  {id:'slate',   g1:'#475569',g2:'#94a3b8'},
+  {id:'orange',  g1:'#ea580c',g2:'#fb923c'},
+];
+let _selectedCatColor = CAT_COLORS[0];
 
 /* ── HISTORY STACK (Feature 4) ── */
 const _history = {
@@ -1493,12 +1612,17 @@ function _showPage(page) {
 // Listen to hash changes (browser back/forward buttons)
 window.addEventListener('hashchange', () => {
   const hash = window.location.hash.replace('#/','').split('?')[0];
-  // Only navigate if user is authenticated AND vault is unlocked
+  // About is public — no auth needed
+  if (hash === 'about') {
+    if (_user && _encKey) navigate('about');
+    else showAboutFromAuth();
+    return;
+  }
+  // All other pages require auth
   if (!_user)    { showView('auth');   return; }
   if (!_encKey)  { showView('master'); return; }
-  if (['vault','settings','about'].includes(hash)) {
-    _showPage(hash);
-    _history.updateBtns();
+  if (['vault','settings'].includes(hash)) {
+    _showPage(hash); _history.updateBtns();
   } else {
     _showPage('vault');
   }
@@ -1797,10 +1921,7 @@ function startVault() {
   document.getElementById('user-nm').textContent = name.split(' ')[0];
   updateUserAvatar();
   loadPrefs();
-  const sel = document.getElementById('m-cat');
-  sel.innerHTML = CATS.map(c => `<option value="${c.id}">${c.ico} ${c.name}</option>`).join('');
-  renderSidebarCats();
-  listenEntries(); listenLogs();
+  loadUserCats(_user.uid).then(() => { listenEntries(); listenLogs(); });
   navigate('vault');
 }
 
@@ -1908,12 +2029,15 @@ async function writeLog(action, eid, ename) {
 
 /* ── SIDEBAR ── */
 function renderSidebarCats() {
-  document.getElementById('cat-side').innerHTML = CATS.map(c =>
+  document.getElementById('cat-side').innerHTML = _userCats.map(c =>
     `<div class="sitem" id="sid-${c.id}" onclick="setFlt('${c.id}')">
-       <div class="sitem-l"><span class="sitem-ico ${c.cssClass}">${c.ico}</span>${c.name}</div>
+       <div class="sitem-l"><span class="sitem-ico cat-svg-ico">${c.svg||catSvgFallback(c.name)}</span>${c.name}</div>
        <span class="sitem-cnt" id="cnt-${c.id}">0</span>
      </div>`
-  ).join('');
+  ).join('') +
+  `<div class="sitem" id="sid-add-cat" onclick="openCatManager()" style="opacity:.7">
+     <div class="sitem-l"><span class="sitem-ico" style="background:var(--bdim);font-size:.9rem;color:var(--blue)">＋</span>Manage Categories</div>
+   </div>`;
 }
 
 function renderSidebar() {
@@ -1924,8 +2048,8 @@ function renderSidebar() {
   document.getElementById('stat-total').textContent= tot;
   document.getElementById('stat-weak').textContent = weak;
   document.getElementById('stat-weak-card').classList.toggle('hidden', weak===0);
-  CATS.forEach(c => { const el=document.getElementById('cnt-'+c.id); if(el) el.textContent=_entries.filter(e=>e.category===c.id).length; });
-  ['all','fav',...CATS.map(c=>c.id)].forEach(id => { const el=document.getElementById('sid-'+id); if(el) el.classList.toggle('active',id===_filter); });
+  _userCats.forEach(c => { const el=document.getElementById('cnt-'+c.id); if(el) el.textContent=_entries.filter(e=>e.category===c.id).length; });
+  ['all','fav',..._userCats.map(c=>c.id)].forEach(id => { const el=document.getElementById('sid-'+id); if(el) el.classList.toggle('active',id===_filter); });
 }
 
 function setFlt(f) {
@@ -1933,7 +2057,7 @@ function setFlt(f) {
   const chip=document.getElementById('filter-chip'), lbl=document.getElementById('filter-chip-lbl');
   if (f==='all') { chip.classList.add('hidden'); }
   else if (f==='fav') { chip.classList.remove('hidden'); lbl.textContent='⭐ Favorites'; }
-  else { const c=CATS.find(x=>x.id===f); chip.classList.remove('hidden'); lbl.textContent=c?`${c.ico} ${c.name}`:f; }
+  else { const c=_userCats.find(x=>x.id===f); chip.classList.remove('hidden'); lbl.textContent=c?c.name:f; }
 }
 
 /* ── RENDER ENTRIES ── */
@@ -1984,20 +2108,15 @@ function launchTile(e, i) {
   </div>`;
 }
 
-function getAv(n, u) {
-  const em = getSiteEmoji(n, u);
-  if (em) return `<span class="ecard-av-l" style="font-size:1.3rem">${em}</span>`;
-  const fv = u ? getFavUrl(u) : null;
-  const fb = `<span class="ecard-av-l">${esc((n||'?').charAt(0).toUpperCase())}</span>`;
-  return fv ? `<img src="${fv}" alt="" onerror="this.outerHTML='${fb}'"/>` : fb;
-}
+
 
 function gCard(e, i) {
-  const cat = CATS.find(c=>c.id===e.category)||CATS[CATS.length-1];
-  const s   = pwStr(e.password||'');
-  const STL = ['','Weak','Fair','Good','Strong'];
-  const pips= [1,2,3,4].map(j=>`<div class="pip${j<=s?` p${s}`:''}"></div>`).join('');
+  const cat  = _userCats.find(c=>c.id===e.category)||_userCats[_userCats.length-1];
+  const s    = pwStr(e.password||'');
+  const STL  = ['','Weak','Fair','Good','Strong'];
+  const pips = [1,2,3,4].map(j=>`<div class="pip${j<=s?` p${s}`:''}"></div>`).join('');
   const masked = '•'.repeat(Math.min((e.password||'').length,12)||8);
+  const catSvg = `<span style="width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">${cat.svg||catSvgFallback(cat.name)}</span>`;
   return `<div class="ecard${e.isFav?' fav':''}" style="animation-delay:${i*.04}s">
     <div class="ecard-glow"></div>
     <div class="ecard-head">
@@ -2010,7 +2129,7 @@ function gCard(e, i) {
         <button class="iab del" onclick="delEntry('${e.id}','${esc(e.name||'')}')">🗑</button>
       </div>
     </div>
-    <div class="ecard-cat"><span class="${cat.cssClass}" style="width:16px;height:16px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem">${cat.ico}</span> ${cat.name}</div>
+    <div class="ecard-cat">${catSvg} ${cat.name}</div>
     <div class="ecard-name">${esc(e.name||'')}</div>
     ${e.url?`<div class="ecard-url">${esc(e.url)}</div>`:''}
     <div class="cbox"><div class="cbox-inf"><div class="cbox-lbl">Username</div><div class="cbox-val">${esc(e.username||'—')}</div></div></div>
@@ -2026,14 +2145,15 @@ function gCard(e, i) {
 }
 
 function lCard(e, i) {
-  const cat = CATS.find(c=>c.id===e.category)||CATS[CATS.length-1];
+  const cat    = _userCats.find(c=>c.id===e.category)||_userCats[_userCats.length-1];
+  const catSvg = `<span style="width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">${cat.svg||catSvgFallback(cat.name)}</span>`;
   return `<div class="lcard" style="animation-delay:${i*.03}s">
     <div class="ecard-av" style="width:38px;height:38px">${getAv(e.name,e.url)}</div>
     <div style="flex:1;min-width:0">
       <div style="font-weight:700;font-size:.92rem">${esc(e.name||'')} ${e.isFav?'⭐':''}</div>
       <div style="font-size:.74rem;color:var(--muted)">${esc(e.username||'')}${e.url?' · '+esc(e.url):''}</div>
     </div>
-    <span style="font-size:.8rem;color:var(--muted)">${cat.ico}</span>
+    ${catSvg}
     <div class="ecard-acts">
       <button class="iab" onclick="copyFld(event,'${esc(e.username||'')}','Username','${e.id}','${esc(e.name||'')}')">👤</button>
       <button class="iab" onclick="copyFld(event,'${esc(e.password||'')}','Password','${e.id}','${esc(e.name||'')}')">📋</button>
@@ -2391,11 +2511,7 @@ function getSiteEmoji(n, u) {
   for (const [kw,em] of Object.entries(SITE_EMOJI)) if (k.includes(kw)) return em;
   return null;
 }
-function getFavUrl(url) {
-  if (!url) return null;
-  try { const u=new URL(url.startsWith('http')?url:'https://'+url); return`https://www.google.com/s2/favicons?domain=${u.hostname}&sz=64`; }
-  catch { return null; }
-}
+// getFavUrl defined above
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
 let _tTmr=null;
@@ -2405,13 +2521,214 @@ function toast(msg, type) {
   clearTimeout(_tTmr); _tTmr=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
-/* ── ABOUT PAGE HELPERS ── */
+/* ── CATEGORY MANAGER ── */
+
+/* Generate an SVG icon from two gradient colors and a letter */
+function makeCatSvg(name, g1, g2, uid) {
+  const letter = (name||'?').charAt(0).toUpperCase();
+  const id = 'gc' + (uid||name||'x').replace(/[^a-z0-9]/gi,'').slice(0,6);
+  return `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${g1}"/><stop offset="100%" style="stop-color:${g2}"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#${id})"/><text x="20" y="26" text-anchor="middle" font-family="'Syne',sans-serif" font-size="18" font-weight="800" fill="white" opacity=".95">${letter}</text></svg>`;
+}
+
+function catSvgFallback(name) {
+  return makeCatSvg(name, '#4d8ef7', '#7c3aed', name);
+}
+
+async function loadUserCats(uid) {
+  if (!_db) return;
+  try {
+    const snap = await _db.collection('vaults').doc(uid).collection('categories').orderBy('createdAt').get();
+    if (!snap.empty) {
+      const fromDB = snap.docs.map(d => {
+        const data = d.data();
+        // Rebuild SVG if it's a custom category (has g1/g2 but no svg stored)
+        if (!data.svg && data.g1) data.svg = makeCatSvg(data.name, data.g1, data.g2, d.id);
+        return { id: d.id, ...data };
+      });
+      // Merge: built-in first, then custom additions
+      const builtInIds = CATS.map(c => c.id);
+      const custom = fromDB.filter(c => !builtInIds.includes(c.id));
+      _userCats = [...CATS, ...custom];
+    } else {
+      _userCats = [...CATS];
+    }
+  } catch(e) { console.warn('loadUserCats:', e); _userCats = [...CATS]; }
+  // Refresh sidebar and modal select
+  renderSidebarCats();
+  const sel = document.getElementById('m-cat');
+  if (sel) sel.innerHTML = _userCats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+}
+
+function openCatManager() {
+  renderCatMgrGrid();
+  renderColorPresets();
+  document.getElementById('cat-msg').className = 'msg';
+  document.getElementById('new-cat-name').value = '';
+  document.getElementById('cat-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('new-cat-name').focus(), 60);
+}
+
+function closeCatModal() {
+  document.getElementById('cat-modal').classList.add('hidden');
+}
+
+function renderCatMgrGrid() {
+  const grid = document.getElementById('cat-mgr-grid');
+  const builtInIds = CATS.map(c => c.id);
+  grid.innerHTML = _userCats.map(c => {
+    const isBuiltIn = builtInIds.includes(c.id);
+    const svg = c.svg || catSvgFallback(c.name);
+    return `<div class="cat-mgr-item">
+      <div class="cat-mgr-svg">${svg}</div>
+      <span class="cat-mgr-name">${esc(c.name)}</span>
+      <button class="cat-mgr-remove${isBuiltIn?' disabled':''}" onclick="${isBuiltIn?'':(`removeCategory('${c.id}')`)}}" title="${isBuiltIn?'Built-in — cannot remove':'Remove category'}">
+        ${isBuiltIn?'🔒':'✕'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function renderColorPresets() {
+  const wrap = document.getElementById('cat-color-presets');
+  wrap.innerHTML = CAT_COLORS.map(col =>
+    `<div class="cat-color-dot${col.id===_selectedCatColor.id?' sel':''}"
+      style="background:linear-gradient(135deg,${col.g1},${col.g2})"
+      onclick="selectCatColor('${col.id}')" title="${col.id}"></div>`
+  ).join('');
+}
+
+function selectCatColor(id) {
+  _selectedCatColor = CAT_COLORS.find(c => c.id === id) || CAT_COLORS[0];
+  renderColorPresets();
+  // Update preview
+  const nameEl = document.getElementById('new-cat-name');
+  if (nameEl.value) {
+    // just re-render - no live preview needed
+  }
+}
+
+async function addCategory() {
+  const name = document.getElementById('new-cat-name').value.trim();
+  const msgEl = document.getElementById('cat-msg');
+  msgEl.className = 'msg';
+  if (!name) { msgEl.textContent = '⚠️ Please enter a category name.'; msgEl.className = 'msg error'; return; }
+  if (name.length > 24) { msgEl.textContent = '⚠️ Name too long (max 24 chars).'; msgEl.className = 'msg error'; return; }
+  if (_userCats.find(c => c.name.toLowerCase() === name.toLowerCase())) {
+    msgEl.textContent = '⚠️ A category with this name already exists.'; msgEl.className = 'msg error'; return;
+  }
+  const id  = 'custom_' + Date.now();
+  const g1  = _selectedCatColor.g1;
+  const g2  = _selectedCatColor.g2;
+  const svg = makeCatSvg(name, g1, g2, id);
+  const newCat = { id, name, g1, g2, svg, cssClass:'cat-other', isCustom: true };
+  _userCats.push(newCat);
+  // Save to Firestore
+  if (_db && _user) {
+    try {
+      await _db.collection('vaults').doc(_user.uid).collection('categories').doc(id).set({
+        id, name, g1, g2, svg, cssClass:'cat-other', isCustom: true,
+        count: 0, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch(e) { console.warn('Save category:', e); }
+  }
+  // Update UI
+  renderSidebarCats();
+  renderSidebar();
+  const sel = document.getElementById('m-cat');
+  if (sel) sel.innerHTML = _userCats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  renderCatMgrGrid();
+  document.getElementById('new-cat-name').value = '';
+  msgEl.textContent = `✓ "${name}" category added!`;
+  msgEl.className = 'msg success';
+  toast(`✓ Category "${name}" added`, 'ok');
+}
+
+async function removeCategory(id) {
+  const cat = _userCats.find(c => c.id === id);
+  if (!cat || !cat.isCustom) { toast('Cannot remove built-in category'); return; }
+  if (!confirm(`Remove category "${cat.name}"? Entries in this category will be moved to "Other".`)) return;
+  // Move entries to 'other'
+  const toMove = _entries.filter(e => e.category === id);
+  if (toMove.length > 0 && _db && _user) {
+    const batch = _db.batch();
+    toMove.forEach(e => batch.update(_db.collection('vaults').doc(_user.uid).collection('entries').doc(e.id), {category:'other'}));
+    await batch.commit().catch(console.warn);
+  }
+  // Remove from Firestore
+  if (_db && _user) {
+    await _db.collection('vaults').doc(_user.uid).collection('categories').doc(id).delete().catch(console.warn);
+  }
+  _userCats = _userCats.filter(c => c.id !== id);
+  if (_filter === id) setFlt('all');
+  renderSidebarCats();
+  renderSidebar();
+  renderCatMgrGrid();
+  const sel = document.getElementById('m-cat');
+  if (sel) sel.innerHTML = _userCats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  toast(`🗑 Category removed`, 'ok');
+}
+
+/* ── IMPROVED FAVICON — multiple fallback services ── */
+function getFavUrl(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url.startsWith('http') ? url : 'https://' + url);
+    const domain = u.hostname;
+    // Use DuckDuckGo icons (high quality, no API key needed)
+    return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+  } catch { return null; }
+}
+
+/* Better getAv — tries real favicon with 3 fallback sources */
+function getAv(n, u) {
+  if (u) {
+    try {
+      const domain = new URL(u.startsWith('http') ? u : 'https://' + u).hostname;
+      const ddg    = `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+      const gfav   = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      const letter = (n||domain||'?').charAt(0).toUpperCase();
+      // Try DDG first, fallback to Google, fallback to gradient letter
+      return `<img src="${ddg}" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;border-radius:6px"
+        onerror="this.src='${gfav}';this.onerror=function(){this.outerHTML='<span class=ecard-av-l style=font-size:1.1rem>${esc(letter)}</span>'}"/>`;
+    } catch(e) {}
+  }
+  // No URL — gradient letter avatar
+  const letter = (n||'?').charAt(0).toUpperCase();
+  const colors = ['#1a6ef5','#7c3aed','#059669','#dc2626','#d97706','#0891b2'];
+  const color  = colors[(n||'').charCodeAt(0) % colors.length] || '#1a6ef5';
+  return `<span class="ecard-av-l" style="font-size:1.1rem;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:${color};color:#fff;font-weight:800;border-radius:8px">${esc(letter)}</span>`;
+}
+
+/* Launch tile also uses getAv - same function applies */
 function aboutScrollTo(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function abCharCount(el) {
+/* Called from vault / settings topbar — go to About and scroll to section */
+function navigateAbout(sectionId) {
+  navigate('about');
+  // Scroll after short delay to let view render
+  setTimeout(() => aboutScrollTo(sectionId), 80);
+}
+
+/* Called from auth navbar (before login) — show About without requiring auth */
+function showAboutFromAuth(sectionId) {
+  // Show about view directly without auth check
+  ['loading','auth','master','vault','settings','about'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.classList.add('hidden');
+  });
+  document.getElementById('view-about').classList.remove('hidden');
+  // Hide the "Back to Vault" button since user isn't logged in — show "Sign In" instead
+  const backBtn = document.querySelector('#view-about .btn-new-e');
+  if (backBtn) { backBtn.textContent = '← Sign In'; backBtn.onclick = () => { showView('auth'); }; }
+  // Reset scroll
+  const body = document.getElementById('about-scroll');
+  if (body) body.scrollTop = 0;
+  if (sectionId) setTimeout(() => aboutScrollTo(sectionId), 80);
+}
+
   const n = el.value.length, max = parseInt(el.getAttribute('maxlength')) || 1500;
   const cc = document.getElementById('ab-cc');
   if (cc) { cc.textContent = n + ' / ' + max; cc.style.color = n > max * .85 ? 'var(--amber)' : n >= max ? 'var(--red)' : 'var(--muted)'; }
@@ -2486,14 +2803,4 @@ document.addEventListener('keydown', e => {
   if ((e.ctrlKey||e.metaKey)&&e.key==='k') { e.preventDefault(); document.getElementById('search-inp')?.focus(); }
   if ((e.ctrlKey||e.metaKey)&&e.key==='n'&&_user&&_encKey) { e.preventDefault(); openModal(); }
   // Alt + Left/Right for navigation
-  if (e.altKey&&e.key==='ArrowLeft')  histBack();
-  if (e.altKey&&e.key==='ArrowRight') histFwd();
-});
-
-document.getElementById('si-pw')?.addEventListener('keydown',   e=>{ if(e.key==='Enter') doSignIn(); });
-document.getElementById('su-pw2')?.addEventListener('keydown',  e=>{ if(e.key==='Enter') doSignUp(); });
-document.getElementById('mp-new2')?.addEventListener('keydown', e=>{ if(e.key==='Enter') setMasterPw(); });
-document.getElementById('mp-unlock')?.addEventListener('keydown',e=>{ if(e.key==='Enter') unlockVault(); });
-</script>
-</body>
-</html>
+  if (e.altKey&&e.key==='ArrowLeft')
